@@ -1,0 +1,60 @@
+{
+  "id": "intune",
+  "name": "Microsoft Intune",
+  "name_en": "Microsoft Intune",
+  "version": "1.0.0",
+  "description": "Gestión de dispositivos en Microsoft Intune vía Microsoft Graph: listar dispositivos, consultar cumplimiento y disparar sincronización remota",
+  "description_en": "Device management in Microsoft Intune via Microsoft Graph: list devices, check compliance and trigger a remote sync",
+  "icon": "icon.svg",
+  "category": "cloud",
+  "category_en": "cloud",
+  "keywords": ["microsoft", "intune", "mdm", "device management", "graph", "azure", "endpoint manager", "cloud", "nube"],
+  "library": {
+    "package": "ruvic-intune-connector",
+    "install": "pip install git+https://github.com/Dgirto/Microsoft-Intune.git#subdirectory=lib",
+    "import_name": "ruvic_intune_connector"
+  },
+  "auth_modes": [
+    {
+      "id": "service_principal",
+      "label": "Service Principal (Azure AD)",
+      "fields": [
+        {
+          "key": "tenant_id",
+          "label": "Tenant ID",
+          "type": "text",
+          "required": true,
+          "placeholder": "00000000-0000-0000-0000-000000000000"
+        },
+        {
+          "key": "client_id",
+          "label": "Client ID",
+          "type": "text",
+          "required": true,
+          "placeholder": "00000000-0000-0000-0000-000000000000"
+        },
+        {
+          "key": "client_secret",
+          "label": "Client Secret",
+          "type": "password",
+          "secret": true,
+          "required": true
+        },
+        {
+          "key": "connect_timeout",
+          "label": "Timeout de conexión (segundos)",
+          "type": "number",
+          "required": false,
+          "default": "10"
+        }
+      ]
+    }
+  ],
+  "env_prefix": "RUVIC_INTUNE_",
+  "operations": ["intune.list_devices", "intune.get_compliance", "intune.sync_device"],
+  "test_connection": true,
+  "docs": {
+    "skill": "SKILL.md",
+    "permissions_note": "El Service Principal necesita el permiso de aplicación de Microsoft Graph 'DeviceManagementManagedDevices.ReadWrite.All' (requiere consentimiento de administrador). No se requieren permisos de administración de políticas ni de configuración de Intune."
+  }
+}

@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ruvic-intune-connector"
+version = "1.0.0"
+description = "Conector Ruvic para Microsoft Intune (Microsoft Graph)"
+requires-python = ">=3.10"
+dependencies = [
+  "azure-identity>=1.15,<2.0",
+  "requests>=2.31,<3.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["ruvic_intune_connector*"]
