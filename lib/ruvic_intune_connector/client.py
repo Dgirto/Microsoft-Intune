@@ -31,6 +31,15 @@ GRAPH_BASE_URL = "https://graph.microsoft.com/v1.0"
 GRAPH_SCOPE = "https://graph.microsoft.com/.default"
 
 
+def _require_device_id(device_id: Any) -> str:
+    if not isinstance(device_id, str):
+        raise IntuneDataError(f"device_id debe ser un string, no {type(device_id).__name__}.")
+    device_id = device_id.strip()
+    if not device_id:
+        raise IntuneDataError("device_id no puede estar vacío.")
+    return device_id
+
+
 class IntuneClient:
     """Cliente de Microsoft Intune sobre Microsoft Graph.
 
@@ -151,6 +160,7 @@ class IntuneClient:
             >>> client.get_compliance("device-id")
             {'id': 'device-id', 'deviceName': 'LAPTOP-01', 'complianceState': 'compliant'}
         """
+        device_id = _require_device_id(device_id)
         response = self._request(
             "GET",
             f"/deviceManagement/managedDevices/{device_id}"
@@ -175,6 +185,7 @@ class IntuneClient:
         Ejemplo:
             >>> client.sync_device("device-id")
         """
+        device_id = _require_device_id(device_id)
         self._request(
             "POST", f"/deviceManagement/managedDevices/{device_id}/syncDevice"
         )
